@@ -35,4 +35,12 @@ func (a *Application) Collect() {
 }
 
 // Report reports the current state of the MemoryStore to the Reporters.
-fu
+func (a *Application) Report() {
+	bo := a.Store.BrokerOffsets()
+	a.Reporters.ReportBrokerOffsets(&bo)
+
+	bm := a.Store.BrokerMetadata()
+	a.Reporters.ReportBrokerMetadata(&bm)
+
+	co := a.Store.ConsumerOffsets()
+	a.Reporters.ReportConsumerOf
