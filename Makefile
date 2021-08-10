@@ -19,3 +19,11 @@ producer:
         --broker-list localhost:9092 \
 		--topic=test
 .PHONY: producer
+
+# Produce data to Kafka
+consumer:
+	@docker-compose exec -T kafka \
+		kafka-console-consumer.sh \
+		--bootstrap-server localhost:9092 \
+		--topic=test
+.PHONY: consumer
