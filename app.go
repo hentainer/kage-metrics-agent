@@ -43,4 +43,14 @@ func (a *Application) Report() {
 	a.Reporters.ReportBrokerMetadata(&bm)
 
 	co := a.Store.ConsumerOffsets()
-	a.Reporters.ReportConsumerOf
+	a.Reporters.ReportConsumerOffsets(&co)
+}
+
+// IsHealthy checks the health of the Application.
+func (a *Application) IsHealthy() bool {
+	if a.Monitor == nil {
+		return false
+	}
+
+	return a.Monitor.IsHealthy()
+}
