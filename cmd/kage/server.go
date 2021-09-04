@@ -24,4 +24,18 @@ func runServer(c *cli.Context) {
 	monitorTicker := time.NewTicker(30 * time.Second)
 	defer monitorTicker.Stop()
 	go func() {
-		for rang
+		for range monitorTicker.C {
+			app.Collect()
+		}
+	}()
+
+	reportTicker := time.NewTicker(60 * time.Second)
+	defer reportTicker.Stop()
+	go func() {
+		for range reportTicker.C {
+			app.Report()
+		}
+	}()
+
+	if c.Bool(FlagServer) {
+		port := c.Stri
