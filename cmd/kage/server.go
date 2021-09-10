@@ -38,4 +38,12 @@ func runServer(c *cli.Context) {
 	}()
 
 	if c.Bool(FlagServer) {
-		port := c.Stri
+		port := c.String(FlagPort)
+		srv := newServer(app)
+		h := http.Server{Addr: ":" + port, Handler: srv}
+		defer func() {
+			h.Shutdown(context.Background())
+		}()
+		go func() {
+			log.Printf("Starting on port %s.\n", port)
+			if err := h.ListenAndServe(); err != n
