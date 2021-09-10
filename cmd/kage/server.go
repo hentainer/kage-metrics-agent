@@ -46,4 +46,19 @@ func runServer(c *cli.Context) {
 		}()
 		go func() {
 			log.Printf("Starting on port %s.\n", port)
-			if err := h.ListenAndServe(); err != n
+			if err := h.ListenAndServe(); err != nil {
+				if err != http.ErrServerClosed {
+					log.Fatal(err)
+				}
+			}
+		}()
+	}
+
+	<-catchOsSignals()
+}
+
+func newServer(app *kage.Application) http.Handler {
+	return server.New(app)
+}
+
+// Wait for SIGTERM to end the a
