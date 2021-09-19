@@ -61,4 +61,17 @@ func newServer(app *kage.Application) http.Handler {
 	return server.New(app)
 }
 
-// Wait for SIGTERM to end the a
+// Wait for SIGTERM to end the application.
+func catchOsSignals() chan bool {
+	sigs := make(chan os.Signal, 1)
+	done := make(chan bool, 1)
+
+	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+
+	go func() {
+		<-sigs
+
+		done <- true
+	}()
+
+	return do
