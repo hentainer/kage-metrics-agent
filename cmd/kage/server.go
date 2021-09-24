@@ -74,4 +74,5 @@ func catchOsSignals() chan bool {
 		done <- true
 	}()
 
-	return do
+	return done
+}
