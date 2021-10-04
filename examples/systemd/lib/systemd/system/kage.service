@@ -1,0 +1,9 @@
+# Sort of a hack: Targets can't be reloaded, so we call it a service instead
+[Unit]
+Description=kage service
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bi
