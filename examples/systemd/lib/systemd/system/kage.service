@@ -6,4 +6,10 @@ After=network.target
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/bi
+ExecStart=/bin/true
+ExecReload=/bin/true
+WorkingDirectory=/etc/kage
+
+[Install]
+WantedBy=multi-user.target
+
