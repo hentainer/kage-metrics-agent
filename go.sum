@@ -11,4 +11,6 @@ github.com/eapache/go-xerial-snappy v0.0.0-20180814174437-776d5712da21/go.mod h1
 github.com/eapache/queue v1.1.0 h1:YOEu7KNc61ntiQlcEeUIoDTJ2o8mQznoNvUhiigpIqc=
 github.com/eapache/queue v1.1.0/go.mod h1:6eCeP0CKFpHLu8blIFXhExK/dRa7WDZfr6jVFPTqq+I=
 github.com/go-stack/stack v1.8.0 h1:5SgMzNM5HxrEjV0ww2lTmX6E2Izsfxas4+YHWRs3Lsk=
-github.com/go-
+github.com/go-stack/stack v1.8.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=
+github.com/go-zoo/bone v0.0.0-20180910124228-2270ec2a18cc h1:7ZEi2mca51QmC10uLpOc+A1gosPj4PFbk5GqOzqKYag=
+github.com/go-zoo/bone v0.0.0-20180910124228-2270ec2a18cc/go.mod h1:oqsroXM1Zco
