@@ -13,4 +13,6 @@ github.com/eapache/queue v1.1.0/go.mod h1:6eCeP0CKFpHLu8blIFXhExK/dRa7WDZfr6jVFP
 github.com/go-stack/stack v1.8.0 h1:5SgMzNM5HxrEjV0ww2lTmX6E2Izsfxas4+YHWRs3Lsk=
 github.com/go-stack/stack v1.8.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=
 github.com/go-zoo/bone v0.0.0-20180910124228-2270ec2a18cc h1:7ZEi2mca51QmC10uLpOc+A1gosPj4PFbk5GqOzqKYag=
-github.com/go-zoo/bone v0.0.0-20180910124228-2270ec2a18cc/go.mod h1:oqsroXM1Zco
+github.com/go-zoo/bone v0.0.0-20180910124228-2270ec2a18cc/go.mod h1:oqsroXM1ZcoSPNsxaSy2JNMJMSC/A463LSB0Vnoa2SI=
+github.com/golang/snappy v0.0.0-20180518054509-2e65f85255db h1:woRePGFeVFfLKN/pOkfl+p/TAqKOfFu+7KPlMVpok/w=
+github.com/golang/snappy v0.0.0-20180518054509-2e65f85255db/go.mod h1:/XxbfmMg8lxefKM7IX
