@@ -17,4 +17,15 @@ type Store interface {
 	ConsumerOffsets() store.ConsumerOffsets
 
 	// BrokerMetadata returns a snapshot of the current broker metadata.
-	BrokerMe
+	BrokerMetadata() store.BrokerMetadata
+
+	// Channel get the offset channel.
+	Channel() chan interface{}
+
+	// Close gracefully stops the Store.
+	Close()
+}
+
+// Monitor represents a Monitor monitor.
+type Monitor interface {
+	// Brokers returns a list 
