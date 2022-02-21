@@ -28,4 +28,13 @@ type Store interface {
 
 // Monitor represents a Monitor monitor.
 type Monitor interface {
-	// Brokers returns a list 
+	// Brokers returns a list of Kafka brokers.
+	Brokers() []kafka.Broker
+
+	// Collect collects the state of Monitor.
+	Collect()
+
+	// IsHealthy checks the health of the Monitor.
+	IsHealthy() bool
+
+	// Close gracefully stops the 
