@@ -12,4 +12,15 @@ import (
 )
 
 // Broker represents a Kafka Broker.
-t
+type Broker struct {
+	ID        int32
+	Connected bool
+}
+
+// Monitor represents a Kafka cluster connection.
+type Monitor struct {
+	brokers []string
+
+	client        sarama.Client
+	refreshTicker *time.Ticker
+	stateCh    
