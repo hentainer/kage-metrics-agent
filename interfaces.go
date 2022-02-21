@@ -37,4 +37,6 @@ type Monitor interface {
 	// IsHealthy checks the health of the Monitor.
 	IsHealthy() bool
 
-	// Close gracefully stops the 
+	// Close gracefully stops the Monitor client.
+	Close()
+}
