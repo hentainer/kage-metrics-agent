@@ -46,4 +46,19 @@ func New(opts ...MonitorFunc) (*Monitor, error) {
 	if err != nil {
 		return nil, err
 	}
-	monitor.client =
+	monitor.client = kafka
+
+	monitor.refreshTicker = time.NewTicker(2 * time.Minute)
+	go func() {
+		for range monitor.refreshTicker.C {
+			monitor.refreshMetadata()
+		}
+	}()
+
+	// Collect initial information
+	go monitor.Collect()
+
+	return monitor, nil
+}
+
+// Brokers 
