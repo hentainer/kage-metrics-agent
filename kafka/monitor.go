@@ -33,4 +33,17 @@ type Monitor struct {
 
 // New creates and returns a new Monitor for a Kafka cluster.
 func New(opts ...MonitorFunc) (*Monitor, error) {
-	monito
+	monitor := &Monitor{}
+
+	for _, o := range opts {
+		o(monitor)
+	}
+
+	config := sarama.NewConfig()
+	config.Version = sarama.V0_10_1_0
+
+	kafka, err := sarama.NewClient(monitor.brokers, config)
+	if err != nil {
+		return nil, err
+	}
+	monitor.client =
