@@ -23,4 +23,14 @@ type Monitor struct {
 
 	client        sarama.Client
 	refreshTicker *time.Ticker
-	stateCh    
+	stateCh       chan interface{}
+
+	ignoreTopics []string
+	ignoreGroups []string
+
+	log log15.Logger
+}
+
+// New creates and returns a new Monitor for a Kafka cluster.
+func New(opts ...MonitorFunc) (*Monitor, error) {
+	monito
