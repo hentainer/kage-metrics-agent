@@ -67,4 +67,18 @@ func (m *Monitor) Brokers() []Broker {
 	for _, b := range m.client.Brokers() {
 		connected, _ := b.Connected()
 		brokers = append(brokers, Broker{
-			ID:        b.ID
+			ID:        b.ID(),
+			Connected: connected,
+		})
+	}
+	return brokers
+}
+
+// Collect collects the state of Kafka.
+func (m *Monitor) Collect() {
+	m.getBrokerOffsets()
+	m.getBrokerMetadata()
+	m.getConsumerOffsets()
+}
+
+// IsHealthy checks the health of t
