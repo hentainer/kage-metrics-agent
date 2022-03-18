@@ -61,4 +61,10 @@ func New(opts ...MonitorFunc) (*Monitor, error) {
 	return monitor, nil
 }
 
-// Brokers 
+// Brokers returns a list of Kafka brokers.
+func (m *Monitor) Brokers() []Broker {
+	brokers := []Broker{}
+	for _, b := range m.client.Brokers() {
+		connected, _ := b.Connected()
+		brokers = append(brokers, Broker{
+			ID:        b.ID
