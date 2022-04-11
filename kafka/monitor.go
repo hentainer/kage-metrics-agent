@@ -81,4 +81,16 @@ func (m *Monitor) Collect() {
 	m.getConsumerOffsets()
 }
 
-// IsHealthy checks the health of t
+// IsHealthy checks the health of the Kafka cluster.
+func (m *Monitor) IsHealthy() bool {
+	for _, b := range m.client.Brokers() {
+		if ok, _ := b.Connected(); ok {
+			return true
+		}
+	}
+
+	return false
+}
+
+// Close gracefully stops the Monitor.
+fu
