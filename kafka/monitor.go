@@ -93,4 +93,11 @@ func (m *Monitor) IsHealthy() bool {
 }
 
 // Close gracefully stops the Monitor.
-fu
+func (m *Monitor) Close() {
+	// Stop the offset ticker
+	m.refreshTicker.Stop()
+}
+
+// getTopics gets the topics for the Kafka cluster.
+func (m *Monitor) getTopics() map[string]int {
+	// If auto create topics is on, trying to fetch metadata for a 
