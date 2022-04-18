@@ -108,4 +108,15 @@ func (m *Monitor) getTopics() map[string]int {
 	topics, _ := m.client.Topics()
 
 	topicMap := make(map[string]int)
-	for _, topic := rang
+	for _, topic := range topics {
+		partitions, _ := m.client.Partitions(topic)
+
+		topicMap[topic] = len(partitions)
+	}
+
+	return topicMap
+}
+
+// refreshMetadata refreshes the broker metadata
+func (m *Monitor) refreshMetadata(topics ...string) {
+	if 
