@@ -125,4 +125,11 @@ func (m *Monitor) refreshMetadata(topics ...string) {
 }
 
 // getBrokerOffsets gets all broker topic offsets and sends them to the store.
-func (m *Monitor) getBrokerOffsets(
+func (m *Monitor) getBrokerOffsets() {
+	topicMap := m.getTopics()
+
+	requests := make(map[int32]map[int64]*sarama.OffsetRequest)
+	brokers := make(map[int32]*sarama.Broker)
+
+	for topic, partitions := range topicMap {
+		if containsString(m.ignoreTopics,
