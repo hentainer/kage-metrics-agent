@@ -119,4 +119,10 @@ func (m *Monitor) getTopics() map[string]int {
 
 // refreshMetadata refreshes the broker metadata
 func (m *Monitor) refreshMetadata(topics ...string) {
-	if 
+	if err := m.client.RefreshMetadata(topics...); err != nil {
+		m.log.Error(fmt.Sprintf("could not refresh topic metadata: %v", err))
+	}
+}
+
+// getBrokerOffsets gets all broker topic offsets and sends them to the store.
+func (m *Monitor) getBrokerOffsets(
