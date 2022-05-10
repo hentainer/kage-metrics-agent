@@ -132,4 +132,11 @@ func (m *Monitor) getBrokerOffsets() {
 	brokers := make(map[int32]*sarama.Broker)
 
 	for topic, partitions := range topicMap {
-		if containsString(m.ignoreTopics,
+		if containsString(m.ignoreTopics, topic) {
+			continue
+		}
+
+		for i := 0; i < partitions; i++ {
+			broker, err := m.client.Leader(topic, int32(i))
+			if err != nil {
+				m.log.Error(fmt.Sprintf("topic leader error on %s:%v: %v", topic, int32(i), err)
