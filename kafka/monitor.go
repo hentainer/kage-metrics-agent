@@ -146,4 +146,9 @@ func (m *Monitor) getBrokerOffsets() {
 			if _, ok := requests[broker.ID()]; !ok {
 				brokers[broker.ID()] = broker
 				requests[broker.ID()] = make(map[int64]*sarama.OffsetRequest)
-				requests[broker.ID()][sarama.OffsetOldest] = &sa
+				requests[broker.ID()][sarama.OffsetOldest] = &sarama.OffsetRequest{}
+				requests[broker.ID()][sarama.OffsetNewest] = &sarama.OffsetRequest{}
+			}
+
+			requests[broker.ID()][sarama.OffsetOldest].AddBlock(topic, int32(i), sarama.OffsetOldest, 1)
+			requests[broker.ID()][sarama.OffsetNewest].Ad
