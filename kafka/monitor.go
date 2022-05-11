@@ -139,4 +139,11 @@ func (m *Monitor) getBrokerOffsets() {
 		for i := 0; i < partitions; i++ {
 			broker, err := m.client.Leader(topic, int32(i))
 			if err != nil {
-				m.log.Error(fmt.Sprintf("topic leader error on %s:%v: %v", topic, int32(i), err)
+				m.log.Error(fmt.Sprintf("topic leader error on %s:%v: %v", topic, int32(i), err))
+				return
+			}
+
+			if _, ok := requests[broker.ID()]; !ok {
+				brokers[broker.ID()] = broker
+				requests[broker.ID()] = make(map[int64]*sarama.OffsetRequest)
+				requests[broker.ID()][sarama.OffsetOldest] = &sa
