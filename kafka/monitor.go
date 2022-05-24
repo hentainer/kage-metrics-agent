@@ -159,4 +159,14 @@ func (m *Monitor) getBrokerOffsets() {
 	getBrokerOffsets := func(brokerID int32, position int64, request *sarama.OffsetRequest) {
 		defer wg.Done()
 
-		response, err := brokers[br
+		response, err := brokers[brokerID].GetAvailableOffsets(request)
+		if err != nil {
+			m.log.Error(fmt.Sprintf("cannot fetch offsets from broker %v: %v", brokerID, err))
+
+			brokers[brokerID].Close()
+
+			return
+		}
+
+		ts := time.Now().Unix() * 1000
+		for topic, partitions := range 
