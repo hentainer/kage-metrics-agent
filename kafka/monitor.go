@@ -151,4 +151,12 @@ func (m *Monitor) getBrokerOffsets() {
 			}
 
 			requests[broker.ID()][sarama.OffsetOldest].AddBlock(topic, int32(i), sarama.OffsetOldest, 1)
-			requests[broker.ID()][sarama.OffsetNewest].Ad
+			requests[broker.ID()][sarama.OffsetNewest].AddBlock(topic, int32(i), sarama.OffsetNewest, 1)
+		}
+	}
+
+	var wg sync.WaitGroup
+	getBrokerOffsets := func(brokerID int32, position int64, request *sarama.OffsetRequest) {
+		defer wg.Done()
+
+		response, err := brokers[br
