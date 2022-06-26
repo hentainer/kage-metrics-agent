@@ -173,4 +173,7 @@ func (m *Monitor) getBrokerOffsets() {
 			for partition, offsetResp := range partitions {
 				if offsetResp.Err != sarama.ErrNoError {
 					if offsetResp.Err == sarama.ErrUnknownTopicOrPartition ||
-						offsetResp.Err == sarama.ErrNotLeaderForParti
+						offsetResp.Err == sarama.ErrNotLeaderForPartition {
+						// If we get this, the metadata is likely off, force a refresh for this topic
+						m.refreshMetadata(topic)
+						m.log.Info(fmt.Sprintf("metadata for topic %s refreshed due to OffsetRes
