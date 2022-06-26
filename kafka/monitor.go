@@ -169,4 +169,8 @@ func (m *Monitor) getBrokerOffsets() {
 		}
 
 		ts := time.Now().Unix() * 1000
-		for topic, partitions := range 
+		for topic, partitions := range response.Blocks {
+			for partition, offsetResp := range partitions {
+				if offsetResp.Err != sarama.ErrNoError {
+					if offsetResp.Err == sarama.ErrUnknownTopicOrPartition ||
+						offsetResp.Err == sarama.ErrNotLeaderForParti
