@@ -176,4 +176,12 @@ func (m *Monitor) getBrokerOffsets() {
 						offsetResp.Err == sarama.ErrNotLeaderForPartition {
 						// If we get this, the metadata is likely off, force a refresh for this topic
 						m.refreshMetadata(topic)
-						m.log.Info(fmt.Sprintf("metadata for topic %s refreshed due to OffsetRes
+						m.log.Info(fmt.Sprintf("metadata for topic %s refreshed due to OffsetResponse error", topic))
+						continue
+					}
+
+					m.log.Warn(fmt.Sprintf("error in OffsetResponse for %s:%v from broker %v: %s", topic, partition, brokerID, offsetResp.Err.Error()))
+					continue
+				}
+
+				offset := &st
