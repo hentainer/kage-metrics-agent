@@ -184,4 +184,9 @@ func (m *Monitor) getBrokerOffsets() {
 					continue
 				}
 
-				offset := &st
+				offset := &store.BrokerPartitionOffset{
+					Topic:               topic,
+					Partition:           partition,
+					Oldest:              position == sarama.OffsetOldest,
+					Offset:              offsetResp.Offsets[0],
+					Timestamp:           ts,
