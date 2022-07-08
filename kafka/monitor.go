@@ -202,4 +202,13 @@ func (m *Monitor) getBrokerOffsets() {
 		for position, request := range requests {
 			wg.Add(1)
 
-			go getB
+			go getBrokerOffsets(brokerID, position, request)
+		}
+	}
+
+	wg.Wait()
+}
+
+// getBrokerMetadata gets all broker topic metadata and sends them to the store.
+func (m *Monitor) getBrokerMetadata() {
+	var broker *sarama.Broke
