@@ -190,3 +190,16 @@ func (m *Monitor) getBrokerOffsets() {
 					Oldest:              position == sarama.OffsetOldest,
 					Offset:              offsetResp.Offsets[0],
 					Timestamp:           ts,
+					TopicPartitionCount: topicMap[topic],
+				}
+
+				m.stateCh <- offset
+			}
+		}
+	}
+
+	for brokerID, requests := range requests {
+		for position, request := range requests {
+			wg.Add(1)
+
+			go getB
