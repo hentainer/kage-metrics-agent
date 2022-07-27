@@ -211,4 +211,15 @@ func (m *Monitor) getBrokerOffsets() {
 
 // getBrokerMetadata gets all broker topic metadata and sends them to the store.
 func (m *Monitor) getBrokerMetadata() {
-	var broker *sarama.Broke
+	var broker *sarama.Broker
+	brokers := m.client.Brokers()
+	for _, b := range brokers {
+		if ok, _ := b.Connected(); ok {
+			broker = b
+			break
+		}
+	}
+
+	if broker == nil {
+		m.log.Error("monitor: no connected brokers found to collect metadata")
+		retu
