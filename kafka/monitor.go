@@ -238,4 +238,10 @@ func (m *Monitor) getBrokerMetadata() {
 		}
 		if topic.Err != sarama.ErrNoError {
 			m.log.Error(fmt.Sprintf("monitor: cannot get topic metadata %s: %v", topic.Name, topic.Err.Error()))
-			cont
+			continue
+		}
+
+		partitionCount := len(topic.Partitions)
+		for _, partition := range topic.Partitions {
+			if partition.Err != sarama.ErrNoError {
+				m.log.Error(fmt.Sprintf("monitor: cannot get topic partition metadata 
