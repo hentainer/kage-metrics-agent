@@ -222,4 +222,14 @@ func (m *Monitor) getBrokerMetadata() {
 
 	if broker == nil {
 		m.log.Error("monitor: no connected brokers found to collect metadata")
-		retu
+		return
+	}
+
+	response, err := broker.GetMetadata(&sarama.MetadataRequest{})
+	if err != nil {
+		m.log.Error(fmt.Sprintf("monitor: cannot get metadata: %v", err))
+		return
+	}
+
+	ts := time.Now().Unix() * 1000
+	for _, topic := range response.Topics 
