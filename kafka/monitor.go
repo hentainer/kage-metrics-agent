@@ -244,4 +244,11 @@ func (m *Monitor) getBrokerMetadata() {
 		partitionCount := len(topic.Partitions)
 		for _, partition := range topic.Partitions {
 			if partition.Err != sarama.ErrNoError {
-				m.log.Error(fmt.Sprintf("monitor: cannot get topic partition metadata 
+				m.log.Error(fmt.Sprintf("monitor: cannot get topic partition metadata %s %d: %v", topic.Name, partition.ID, partition.Err.Error()))
+				continue
+			}
+
+			m.stateCh <- &store.BrokerPartitionMetadata{
+				Topic:               topic.Name,
+				Partition:           partition.ID,
+				TopicPartit
