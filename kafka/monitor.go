@@ -251,4 +251,14 @@ func (m *Monitor) getBrokerMetadata() {
 			m.stateCh <- &store.BrokerPartitionMetadata{
 				Topic:               topic.Name,
 				Partition:           partition.ID,
-				TopicPartit
+				TopicPartitionCount: partitionCount,
+				Leader:              partition.Leader,
+				Replicas:            partition.Replicas,
+				Isr:                 partition.Isr,
+				Timestamp:           ts,
+			}
+		}
+	}
+}
+
+// getConsumerOffsets gets 
