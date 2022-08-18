@@ -261,4 +261,10 @@ func (m *Monitor) getBrokerMetadata() {
 	}
 }
 
-// getConsumerOffsets gets 
+// getConsumerOffsets gets all the consumer offsets and send them to the store.
+func (m *Monitor) getConsumerOffsets() {
+	topicMap := m.getTopics()
+	requests := make(map[int32]map[string]*sarama.OffsetFetchRequest)
+	coordinators := make(map[int32]*sarama.Broker)
+
+	brokers := 
