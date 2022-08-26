@@ -267,4 +267,10 @@ func (m *Monitor) getConsumerOffsets() {
 	requests := make(map[int32]map[string]*sarama.OffsetFetchRequest)
 	coordinators := make(map[int32]*sarama.Broker)
 
-	brokers := 
+	brokers := m.client.Brokers()
+	for _, broker := range brokers {
+		if ok, err := broker.Connected(); !ok {
+			if err != nil {
+				m.log.Error(fmt.Sprintf("monitor: failed to connect to broker broker %v: %v", broker.ID(), err))
+				continue
+			
