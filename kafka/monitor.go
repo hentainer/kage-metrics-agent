@@ -273,4 +273,12 @@ func (m *Monitor) getConsumerOffsets() {
 			if err != nil {
 				m.log.Error(fmt.Sprintf("monitor: failed to connect to broker broker %v: %v", broker.ID(), err))
 				continue
-			
+			}
+
+			if err := broker.Open(m.client.Config()); err != nil {
+				m.log.Error(fmt.Sprintf("monitor: failed to connect to broker broker %v: %v", broker.ID(), err))
+				continue
+			}
+		}
+
+		groups, err := broker.ListGroups(
