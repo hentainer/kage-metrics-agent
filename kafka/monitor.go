@@ -288,4 +288,14 @@ func (m *Monitor) getConsumerOffsets() {
 		}
 
 		for group := range groups.Groups {
-			if containsString(m.ig
+			if containsString(m.ignoreGroups, group) {
+				continue
+			}
+
+			coordinator, err := m.client.Coordinator(group)
+			if err != nil {
+				m.log.Error(fmt.Sprintf("monitor: cannot fetch co-ordinator for group %s: %v", group, err))
+				continue
+			}
+
+			if _
