@@ -281,4 +281,11 @@ func (m *Monitor) getConsumerOffsets() {
 			}
 		}
 
-		groups, err := broker.ListGroups(
+		groups, err := broker.ListGroups(&sarama.ListGroupsRequest{})
+		if err != nil {
+			m.log.Error(fmt.Sprintf("monitor: cannot fetch consumer groups on broker %v: %v", broker.ID(), err))
+			continue
+		}
+
+		for group := range groups.Groups {
+			if containsString(m.ig
