@@ -303,4 +303,10 @@ func (m *Monitor) getConsumerOffsets() {
 				requests[coordinator.ID()] = make(map[string]*sarama.OffsetFetchRequest)
 			}
 
-			if _, ok := requests[c
+			if _, ok := requests[coordinator.ID()][group]; !ok {
+				requests[coordinator.ID()][group] = &sarama.OffsetFetchRequest{ConsumerGroup: group, Version: 1}
+			}
+
+			for topic, partitions := range topicMap {
+				for i := 0; i < partitions; i++ {
+			
