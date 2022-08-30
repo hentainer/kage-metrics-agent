@@ -298,4 +298,9 @@ func (m *Monitor) getConsumerOffsets() {
 				continue
 			}
 
-			if _
+			if _, ok := requests[coordinator.ID()]; !ok {
+				coordinators[coordinator.ID()] = coordinator
+				requests[coordinator.ID()] = make(map[string]*sarama.OffsetFetchRequest)
+			}
+
+			if _, ok := requests[c
