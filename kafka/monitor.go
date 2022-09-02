@@ -309,4 +309,12 @@ func (m *Monitor) getConsumerOffsets() {
 
 			for topic, partitions := range topicMap {
 				for i := 0; i < partitions; i++ {
-			
+					requests[coordinator.ID()][group].AddPartition(topic, int32(i))
+				}
+			}
+		}
+	}
+
+	var wg sync.WaitGroup
+	getConsumerOffsets := func(brokerID int32, group string, request *sarama.OffsetFetchRequest) {
+		defer wg.
