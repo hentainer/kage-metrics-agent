@@ -317,4 +317,15 @@ func (m *Monitor) getConsumerOffsets() {
 
 	var wg sync.WaitGroup
 	getConsumerOffsets := func(brokerID int32, group string, request *sarama.OffsetFetchRequest) {
-		defer wg.
+		defer wg.Done()
+
+		coordinator := coordinators[brokerID]
+
+		offsets, err := coordinator.FetchOffset(request)
+		if err != nil {
+			m.log.Error(fmt.Sprintf("monitor: cannot get group topic offsets %v: %v", brokerID, err))
+
+			return
+		}
+
+		ts := time
