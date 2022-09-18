@@ -328,4 +328,8 @@ func (m *Monitor) getConsumerOffsets() {
 			return
 		}
 
-		ts := time
+		ts := time.Now().Unix() * 1000
+		for topic, partitions := range offsets.Blocks {
+			for partition, block := range partitions {
+				if block.Err != sarama.ErrNoError {
+					m.log.Error(fmt.Sprintf("monitor: cannot get group topic offsets %v: %v"
