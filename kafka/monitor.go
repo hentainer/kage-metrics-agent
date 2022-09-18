@@ -332,4 +332,14 @@ func (m *Monitor) getConsumerOffsets() {
 		for topic, partitions := range offsets.Blocks {
 			for partition, block := range partitions {
 				if block.Err != sarama.ErrNoError {
-					m.log.Error(fmt.Sprintf("monitor: cannot get group topic offsets %v: %v"
+					m.log.Error(fmt.Sprintf("monitor: cannot get group topic offsets %v: %v", brokerID, block.Err.Error()))
+					continue
+				}
+
+				if block.Offset == -1 {
+					// We don't have an offset for this topic partition, ignore.
+					continue
+				}
+
+				offset := &store.ConsumerPartitionOffset{
+					Group:     
