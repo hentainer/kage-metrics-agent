@@ -358,4 +358,14 @@ func (m *Monitor) getConsumerOffsets() {
 		for group, request := range groups {
 			wg.Add(1)
 
-			go getConsumerOffsets(bro
+			go getConsumerOffsets(brokerID, group, request)
+		}
+	}
+
+	wg.Wait()
+}
+
+// containsString determines if the string matches any of the provided patterns.
+func containsString(patterns []string, subject string) bool {
+	for _, pattern := range patterns {
+		if glob.Glob(pattern, subj
