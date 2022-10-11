@@ -368,4 +368,10 @@ func (m *Monitor) getConsumerOffsets() {
 // containsString determines if the string matches any of the provided patterns.
 func containsString(patterns []string, subject string) bool {
 	for _, pattern := range patterns {
-		if glob.Glob(pattern, subj
+		if glob.Glob(pattern, subject) {
+			return true
+		}
+	}
+
+	return false
+}
