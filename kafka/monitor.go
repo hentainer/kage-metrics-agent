@@ -342,4 +342,20 @@ func (m *Monitor) getConsumerOffsets() {
 				}
 
 				offset := &store.ConsumerPartitionOffset{
-					Group:     
+					Group:     group,
+					Topic:     topic,
+					Partition: partition,
+					Offset:    block.Offset,
+					Timestamp: ts,
+				}
+
+				m.stateCh <- offset
+			}
+		}
+	}
+
+	for brokerID, groups := range requests {
+		for group, request := range groups {
+			wg.Add(1)
+
+			go getConsumerOffsets(bro
