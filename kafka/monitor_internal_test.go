@@ -158,3 +158,22 @@ func TestMonitor_getConsumerOffsets(t *testing.T) {
 			SetOffset("test", "foo", 0, 123, "", sarama.ErrNoError).
 			SetOffset("unread", "foo", 0, -1, "", sarama.ErrNoError),
 	})
+
+	conf := sarama.NewConfig()
+	conf.Version = sarama.V0_10_1_0
+	kafka, err := sarama.NewClient([]string{broker.Addr()}, conf)
+	assert.NoError(t, err)
+
+	c := &Monitor{
+		client:       kafka,
+		stateCh:      make(chan interface{}, 100),
+		log:          testutil.Logger,
+		ignoreGroups: []string{"ignore"},
+	}
+
+	c.getConsumerOffsets()
+
+	assert.Len(t, c.stateCh, 1)
+
+	broker.Close()
+}
