@@ -25,4 +25,17 @@ func TestIgnoreGroups(t *testing.T) {
 	assert.Equal(t, i, c.ignoreGroups)
 }
 
-func TestIgnoreTopics
+func TestIgnoreTopics(t *testing.T) {
+	i := []string{"test"}
+	c := &Monitor{}
+
+	IgnoreTopics(i)(c)
+
+	assert.Equal(t, i, c.ignoreTopics)
+}
+
+func TestLog(t *testing.T) {
+	log := log15.New()
+	c := &Monitor{}
+
+	Log(log)(c)
