@@ -39,3 +39,15 @@ func TestLog(t *testing.T) {
 	c := &Monitor{}
 
 	Log(log)(c)
+
+	assert.Equal(t, log, c.log)
+}
+
+func TestOffsetChannel(t *testing.T) {
+	ch := make(chan interface{})
+	c := &Monitor{}
+
+	StateChannel(ch)(c)
+
+	assert.Equal(t, ch, c.stateCh)
+}
