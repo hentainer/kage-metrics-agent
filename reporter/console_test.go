@@ -10,3 +10,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestConsoleReporter_ReportBrokerOffsets(t *testing.T) {
+	buf := bytes.NewBuffer([]byte{})
+	r := reporter.NewConsoleReporter(buf)
+
+	offsets := &store.BrokerOffsets{
+		"test": []*store.BrokerOffset{
+			{
+				OldestOffs
