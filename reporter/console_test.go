@@ -28,4 +28,13 @@ func TestConsoleReporter_ReportBrokerOffsets(t *testing.T) {
 	assert.Equal(t, "test:0 oldest:0 newest:1000 available:1000 \n", buf.String())
 }
 
-func TestConsoleReporter_ReportBro
+func TestConsoleReporter_ReportBrokerMetadata(t *testing.T) {
+	buf := bytes.NewBuffer([]byte{})
+	r := reporter.NewConsoleReporter(buf)
+
+	metadata := &store.BrokerMetadata{
+		"test": []*store.Metadata{
+			{
+				Leader:    1,
+				Replicas:  []int32{1, 2},
+				Isr:       []int
