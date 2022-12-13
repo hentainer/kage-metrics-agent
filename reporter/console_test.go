@@ -37,4 +37,14 @@ func TestConsoleReporter_ReportBrokerMetadata(t *testing.T) {
 			{
 				Leader:    1,
 				Replicas:  []int32{1, 2},
-				Isr:       []int
+				Isr:       []int32{1, 2},
+				Timestamp: time.Now().Unix() * 1000,
+			},
+		},
+	}
+	r.ReportBrokerMetadata(metadata)
+
+	assert.Equal(t, "test:0 leader:1 replicas:1,2 isr:1,2 \n", buf.String())
+}
+
+func TestConsoleReporter_Repor
