@@ -17,4 +17,15 @@ func TestConsoleReporter_ReportBrokerOffsets(t *testing.T) {
 	offsets := &store.BrokerOffsets{
 		"test": []*store.BrokerOffset{
 			{
-				OldestOffs
+				OldestOffset: 0,
+				NewestOffset: 1000,
+				Timestamp:    time.Now().Unix() * 1000,
+			},
+		},
+	}
+	r.ReportBrokerOffsets(offsets)
+
+	assert.Equal(t, "test:0 oldest:0 newest:1000 available:1000 \n", buf.String())
+}
+
+func TestConsoleReporter_ReportBro
