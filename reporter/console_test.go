@@ -47,4 +47,13 @@ func TestConsoleReporter_ReportBrokerMetadata(t *testing.T) {
 	assert.Equal(t, "test:0 leader:1 replicas:1,2 isr:1,2 \n", buf.String())
 }
 
-func TestConsoleReporter_Repor
+func TestConsoleReporter_ReportConsumerOffsets(t *testing.T) {
+	buf := bytes.NewBuffer([]byte{})
+	r := reporter.NewConsoleReporter(buf)
+
+	offsets := &store.ConsumerOffsets{
+		"foo": map[string][]*store.ConsumerOffset{
+			"test": {
+				{
+					Offset:    1000,
+					Lag:  
