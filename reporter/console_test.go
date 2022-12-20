@@ -56,4 +56,13 @@ func TestConsoleReporter_ReportConsumerOffsets(t *testing.T) {
 			"test": {
 				{
 					Offset:    1000,
-					Lag:  
+					Lag:       100,
+					Timestamp: time.Now().Unix() * 1000,
+				},
+			},
+		},
+	}
+	r.ReportConsumerOffsets(offsets)
+
+	assert.Equal(t, "foo test:0 offset:1000 lag:100 \n", buf.String())
+}
