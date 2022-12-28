@@ -20,4 +20,13 @@ func Database(db string) InfluxReporterFunc {
 	}
 }
 
-// Log configures the logger on an InfluxRepor
+// Log configures the logger on an InfluxReporter.
+func Log(log log15.Logger) InfluxReporterFunc {
+	return func(c *InfluxReporter) {
+		c.log = log
+	}
+}
+
+// Metric configures the metric name on an InfluxReporter.
+func Metric(metric string) InfluxReporterFunc {
+	retur
