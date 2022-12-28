@@ -13,4 +13,11 @@ import (
 // InfluxReporterFunc represents a configuration function for InfluxReporter.
 type InfluxReporterFunc func(c *InfluxReporter)
 
-// D
+// Database configures the database on an InfluxReporter.
+func Database(db string) InfluxReporterFunc {
+	return func(c *InfluxReporter) {
+		c.database = db
+	}
+}
+
+// Log configures the logger on an InfluxRepor
