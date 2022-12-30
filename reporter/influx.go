@@ -29,4 +29,12 @@ func Log(log log15.Logger) InfluxReporterFunc {
 
 // Metric configures the metric name on an InfluxReporter.
 func Metric(metric string) InfluxReporterFunc {
-	retur
+	return func(c *InfluxReporter) {
+		c.metric = metric
+	}
+}
+
+// Policy configures the retention policy name on an InfluxReporter.
+func Policy(policy string) InfluxReporterFunc {
+	return func(c *InfluxReporter) {
+		c.policy = p
