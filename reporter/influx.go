@@ -37,4 +37,16 @@ func Metric(metric string) InfluxReporterFunc {
 // Policy configures the retention policy name on an InfluxReporter.
 func Policy(policy string) InfluxReporterFunc {
 	return func(c *InfluxReporter) {
-		c.policy = p
+		c.policy = policy
+	}
+}
+
+// Tags configures the additional tags on an InfluxReporter.
+func Tags(tags map[string]string) InfluxReporterFunc {
+	return func(c *InfluxReporter) {
+		c.tags = tags
+	}
+}
+
+// InfluxReporter represents an InfluxDB reporter.
+type
