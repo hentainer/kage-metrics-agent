@@ -62,4 +62,17 @@ type InfluxReporter struct {
 }
 
 // NewInfluxReporter creates and returns a new NewInfluxReporter.
-func NewInfluxRepor
+func NewInfluxReporter(client client.Client, opts ...InfluxReporterFunc) *InfluxReporter {
+	r := &InfluxReporter{
+		client: client,
+	}
+
+	for _, o := range opts {
+		o(r)
+	}
+
+	return r
+}
+
+// ReportBrokerOffsets reports a snapshot of the broker offsets.
+func (r Influx
