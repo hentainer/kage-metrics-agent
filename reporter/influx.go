@@ -49,4 +49,17 @@ func Tags(tags map[string]string) InfluxReporterFunc {
 }
 
 // InfluxReporter represents an InfluxDB reporter.
-type
+type InfluxReporter struct {
+	database string
+
+	metric string
+	policy string
+	tags   map[string]string
+
+	client client.Client
+
+	log log15.Logger
+}
+
+// NewInfluxReporter creates and returns a new NewInfluxReporter.
+func NewInfluxRepor
