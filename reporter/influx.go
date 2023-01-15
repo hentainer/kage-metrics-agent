@@ -75,4 +75,11 @@ func NewInfluxReporter(client client.Client, opts ...InfluxReporterFunc) *Influx
 }
 
 // ReportBrokerOffsets reports a snapshot of the broker offsets.
-func (r Influx
+func (r InfluxReporter) ReportBrokerOffsets(o *store.BrokerOffsets) {
+	pts, _ := client.NewBatchPoints(client.BatchPointsConfig{
+		Database:        r.database,
+		Precision:       "s",
+		RetentionPolicy: r.policy,
+	})
+
+	for topic, partitions := 
