@@ -82,4 +82,13 @@ func (r InfluxReporter) ReportBrokerOffsets(o *store.BrokerOffsets) {
 		RetentionPolicy: r.policy,
 	})
 
-	for topic, partitions := 
+	for topic, partitions := range *o {
+		for partition, offset := range partitions {
+			if offset == nil {
+				continue
+			}
+
+			tags := map[string]string{
+				"type":      "BrokerOffset",
+				"topic":     topic,
+				"partition": fmt.Sprint(par
