@@ -91,4 +91,16 @@ func (r InfluxReporter) ReportBrokerOffsets(o *store.BrokerOffsets) {
 			tags := map[string]string{
 				"type":      "BrokerOffset",
 				"topic":     topic,
-				"partition": fmt.Sprint(par
+				"partition": fmt.Sprint(partition),
+			}
+
+			for key, value := range r.tags {
+				tags[key] = value
+			}
+
+			pt, _ := client.NewPoint(
+				r.metric,
+				tags,
+				map[string]interface{}{
+					"oldest":    offset.OldestOffset,
+					"newest":    offset.N
