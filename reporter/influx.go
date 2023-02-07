@@ -103,4 +103,19 @@ func (r InfluxReporter) ReportBrokerOffsets(o *store.BrokerOffsets) {
 				tags,
 				map[string]interface{}{
 					"oldest":    offset.OldestOffset,
-					"newest":    offset.N
+					"newest":    offset.NewestOffset,
+					"available": offset.NewestOffset - offset.OldestOffset,
+				},
+				time.Now(),
+			)
+
+			pts.AddPoint(pt)
+		}
+	}
+
+	if err := r.client.Write(pts); err != nil {
+		r.log.Error("influx: offsets:" + err.Error())
+	}
+}
+
+// ReportB
