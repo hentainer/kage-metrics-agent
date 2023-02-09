@@ -118,4 +118,8 @@ func (r InfluxReporter) ReportBrokerOffsets(o *store.BrokerOffsets) {
 	}
 }
 
-// ReportB
+// ReportBrokerMetadata reports a snapshot of the broker metadata.
+func (r InfluxReporter) ReportBrokerMetadata(m *store.BrokerMetadata) {
+	pts, _ := client.NewBatchPoints(client.BatchPointsConfig{
+		Database:        r.database,
+		Precisio
