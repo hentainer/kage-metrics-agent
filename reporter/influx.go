@@ -122,4 +122,15 @@ func (r InfluxReporter) ReportBrokerOffsets(o *store.BrokerOffsets) {
 func (r InfluxReporter) ReportBrokerMetadata(m *store.BrokerMetadata) {
 	pts, _ := client.NewBatchPoints(client.BatchPointsConfig{
 		Database:        r.database,
-		Precisio
+		Precision:       "s",
+		RetentionPolicy: r.policy,
+	})
+
+	for topic, partitions := range *m {
+		for partition, metadata := range partitions {
+			if metadata == nil {
+				continue
+			}
+
+			tags := map[string]string{
+				"ty
