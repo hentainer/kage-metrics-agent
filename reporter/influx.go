@@ -133,4 +133,17 @@ func (r InfluxReporter) ReportBrokerMetadata(m *store.BrokerMetadata) {
 			}
 
 			tags := map[string]string{
-				"ty
+				"type":      "BrokerMetadata",
+				"topic":     topic,
+				"partition": fmt.Sprint(partition),
+			}
+
+			for key, value := range r.tags {
+				tags[key] = value
+			}
+
+			leaders := 1
+			if metadata.Leader < 0 {
+				leaders = 0
+			}
+			pt
