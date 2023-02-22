@@ -153,4 +153,18 @@ func (r InfluxReporter) ReportBrokerMetadata(m *store.BrokerMetadata) {
 					"leaders":  leaders,
 					"replicas": len(metadata.Replicas),
 					"isr":      len(metadata.Isr),
-					"isr_diff": math.Abs(float64(len(
+					"isr_diff": math.Abs(float64(len(metadata.Isr) - len(metadata.Replicas))),
+				},
+				time.Now(),
+			)
+
+			pts.AddPoint(pt)
+		}
+	}
+
+	if err := r.client.Write(pts); err != nil {
+		r.log.Error("influx: metadata:" + err.Error())
+	}
+}
+
+// ReportConsumerOffsets reports a sn
