@@ -167,4 +167,9 @@ func (r InfluxReporter) ReportBrokerMetadata(m *store.BrokerMetadata) {
 	}
 }
 
-// ReportConsumerOffsets reports a sn
+// ReportConsumerOffsets reports a snapshot of the consumer group offsets.
+func (r InfluxReporter) ReportConsumerOffsets(o *store.ConsumerOffsets) {
+	pts, _ := client.NewBatchPoints(client.BatchPointsConfig{
+		Database:        r.database,
+		Precision:       "s",
+		RetentionPol
