@@ -146,4 +146,11 @@ func (r InfluxReporter) ReportBrokerMetadata(m *store.BrokerMetadata) {
 			if metadata.Leader < 0 {
 				leaders = 0
 			}
-			pt
+			pt, _ := client.NewPoint(
+				r.metric,
+				tags,
+				map[string]interface{}{
+					"leaders":  leaders,
+					"replicas": len(metadata.Replicas),
+					"isr":      len(metadata.Isr),
+					"isr_diff": math.Abs(float64(len(
