@@ -183,4 +183,17 @@ func (r InfluxReporter) ReportConsumerOffsets(o *store.ConsumerOffsets) {
 				}
 
 				tags := map[string]string{
-					"type":      "
+					"type":      "ConsumerOffset",
+					"group":     group,
+					"topic":     topic,
+					"partition": fmt.Sprint(partition),
+				}
+
+				for key, value := range r.tags {
+					tags[key] = value
+				}
+
+				pt, _ := client.NewPoint(
+					r.metric,
+					tags,
+					map[stri
