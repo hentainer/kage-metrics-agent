@@ -196,4 +196,17 @@ func (r InfluxReporter) ReportConsumerOffsets(o *store.ConsumerOffsets) {
 				pt, _ := client.NewPoint(
 					r.metric,
 					tags,
-					map[stri
+					map[string]interface{}{
+						"offset": offset.Offset,
+						"lag":    offset.Lag,
+					},
+					time.Now(),
+				)
+
+				pts.AddPoint(pt)
+			}
+		}
+	}
+
+	if err := r.client.Write(pts); err != nil {
+		r.log.Error("influx: consumer-offsets:" + er
