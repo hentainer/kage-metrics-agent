@@ -172,4 +172,15 @@ func (r InfluxReporter) ReportConsumerOffsets(o *store.ConsumerOffsets) {
 	pts, _ := client.NewBatchPoints(client.BatchPointsConfig{
 		Database:        r.database,
 		Precision:       "s",
-		RetentionPol
+		RetentionPolicy: r.policy,
+	})
+
+	for group, topics := range *o {
+		for topic, partitions := range topics {
+			for partition, offset := range partitions {
+				if offset == nil {
+					continue
+				}
+
+				tags := map[string]string{
+					"type":      "
