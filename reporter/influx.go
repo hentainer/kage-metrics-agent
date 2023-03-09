@@ -209,4 +209,6 @@ func (r InfluxReporter) ReportConsumerOffsets(o *store.ConsumerOffsets) {
 	}
 
 	if err := r.client.Write(pts); err != nil {
-		r.log.Error("influx: consumer-offsets:" + er
+		r.log.Error("influx: consumer-offsets:" + err.Error())
+	}
+}
