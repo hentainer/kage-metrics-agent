@@ -12,4 +12,20 @@ func TestDatabase(t *testing.T) {
 
 	Database("test")(r)
 
-	assert.Equal(
+	assert.Equal(t, r.database, "test")
+}
+
+func TestMetric(t *testing.T) {
+	r := &InfluxReporter{}
+
+	Metric("kafka")(r)
+
+	assert.Equal(t, r.metric, "kafka")
+}
+
+func TestPolicy(t *testing.T) {
+	r := &InfluxReporter{}
+
+	Policy("foobar")(r)
+
+	assert.Eq
