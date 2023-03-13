@@ -28,4 +28,17 @@ func TestPolicy(t *testing.T) {
 
 	Policy("foobar")(r)
 
-	assert.Eq
+	assert.Equal(t, r.policy, "foobar")
+}
+
+func TestTags(t *testing.T) {
+	r := &InfluxReporter{}
+
+	Tags(map[string]string{"foo": "bar"})(r)
+
+	assert.Equal(t, r.tags["foo"], "bar")
+}
+
+func TestLog(t *testing.T) {
+	log := log15.New()
+	r := &InfluxReporte
