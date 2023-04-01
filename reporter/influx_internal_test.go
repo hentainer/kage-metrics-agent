@@ -41,4 +41,9 @@ func TestTags(t *testing.T) {
 
 func TestLog(t *testing.T) {
 	log := log15.New()
-	r := &InfluxReporte
+	r := &InfluxReporter{}
+
+	Log(log)(r)
+
+	assert.Equal(t, r.log, log)
+}
