@@ -20,4 +20,13 @@ func TestInfluxReporter_ReportBrokerOffsets(t *testing.T) {
 		assert.Len(t, bp.Points(), 1)
 	})
 
-	r := reporte
+	r := reporter.NewInfluxReporter(c,
+		reporter.Tags(map[string]string{"test": "test"}),
+		reporter.Log(testutil.Logger),
+	)
+
+	offsets := &store.BrokerOffsets{
+		"test": []*store.BrokerOffset{
+			{
+				OldestOffset: 0,
+			
