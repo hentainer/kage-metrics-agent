@@ -29,4 +29,16 @@ func TestInfluxReporter_ReportBrokerOffsets(t *testing.T) {
 		"test": []*store.BrokerOffset{
 			{
 				OldestOffset: 0,
-			
+				NewestOffset: 1000,
+				Timestamp:    time.Now().Unix() * 1000,
+			},
+		},
+		"nil": []*store.BrokerOffset{nil},
+	}
+	r.ReportBrokerOffsets(offsets)
+
+}
+
+func TestInfluxReporter_ReportBrokerMetadata(t *testing.T) {
+	c := new(mocks.MockInfluxClient)
+	c.On("Write
