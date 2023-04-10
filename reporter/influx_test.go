@@ -47,4 +47,14 @@ func TestInfluxReporter_ReportBrokerMetadata(t *testing.T) {
 	})
 
 	r := reporter.NewInfluxReporter(c,
-		reporter.Tags(map[st
+		reporter.Tags(map[string]string{"test": "test"}),
+		reporter.Log(testutil.Logger),
+	)
+
+	metadata := &store.BrokerMetadata{
+		"test": []*store.Metadata{
+			{
+				Leader:    1,
+				Replicas:  []int32{1, 2},
+				Isr:       []int32{1, 2},
+				Timestamp: time.No
