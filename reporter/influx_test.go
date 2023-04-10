@@ -41,4 +41,10 @@ func TestInfluxReporter_ReportBrokerOffsets(t *testing.T) {
 
 func TestInfluxReporter_ReportBrokerMetadata(t *testing.T) {
 	c := new(mocks.MockInfluxClient)
-	c.On("Write
+	c.On("Write", mock.AnythingOfType("*client.batchpoints")).Return(nil).Run(func(args mock.Arguments) {
+		bp := args.Get(0).(client.BatchPoints)
+		assert.Len(t, bp.Points(), 1)
+	})
+
+	r := reporter.NewInfluxReporter(c,
+		reporter.Tags(map[st
