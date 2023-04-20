@@ -57,4 +57,15 @@ func TestInfluxReporter_ReportBrokerMetadata(t *testing.T) {
 				Leader:    1,
 				Replicas:  []int32{1, 2},
 				Isr:       []int32{1, 2},
-				Timestamp: time.No
+				Timestamp: time.Now().Unix() * 1000,
+			},
+		},
+		"nil": []*store.Metadata{nil},
+	}
+	r.ReportBrokerMetadata(metadata)
+
+}
+
+func TestInfluxReporter_ReportConsumerOffsets(t *testing.T) {
+	c := new(mocks.MockInfluxClient)
+	c.On("Write", mock.Anyth
