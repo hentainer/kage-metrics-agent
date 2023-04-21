@@ -74,4 +74,16 @@ func TestInfluxReporter_ReportConsumerOffsets(t *testing.T) {
 	})
 
 	r := reporter.NewInfluxReporter(c,
-		reporter.Tags(map[string]string{"test": "t
+		reporter.Tags(map[string]string{"test": "test"}),
+		reporter.Log(testutil.Logger),
+	)
+
+	offsets := &store.ConsumerOffsets{
+		"foo": map[string][]*store.ConsumerOffset{
+			"test": {
+				{
+					Offset:    1000,
+					Lag:       100,
+					Timestamp: time.Now().Unix() * 1000,
+				},
+			},
