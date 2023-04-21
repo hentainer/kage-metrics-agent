@@ -87,3 +87,8 @@ func TestInfluxReporter_ReportConsumerOffsets(t *testing.T) {
 					Timestamp: time.Now().Unix() * 1000,
 				},
 			},
+			"nil": {nil},
+		},
+	}
+	r.ReportConsumerOffsets(offsets)
+}
