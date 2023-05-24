@@ -18,4 +18,15 @@ type Reporter interface {
 type Reporters map[string]Reporter
 
 // Add adds a Reporter to the set.
-func (rs *Reporters) Add(key string, r Reporter) 
+func (rs *Reporters) Add(key string, r Reporter) {
+	(*rs)[key] = r
+}
+
+// ReportBrokerOffsets reports a snapshot of the broker offsets on all reporters.
+func (rs *Reporters) ReportBrokerOffsets(v *store.BrokerOffsets) {
+	for _, r := range *rs {
+		r.ReportBrokerOffsets(v)
+	}
+}
+
+/
