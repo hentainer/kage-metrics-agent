@@ -29,4 +29,11 @@ func (rs *Reporters) ReportBrokerOffsets(v *store.BrokerOffsets) {
 	}
 }
 
-/
+// ReportBrokerMetadata reports a snapshot of the broker metadata.
+func (rs *Reporters) ReportBrokerMetadata(v *store.BrokerMetadata) {
+	for _, r := range *rs {
+		r.ReportBrokerMetadata(v)
+	}
+}
+
+// ReportConsumerOffsets repor
