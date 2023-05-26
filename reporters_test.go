@@ -53,3 +53,32 @@ func TestReporters_ReportConsumerOffsets(t *testing.T) {
 
 	m2 := new(mocks.MockReporter)
 	m2.On("ReportConsumerOffsets", mock.AnythingOfType("*store.ConsumerOffsets")).Run(func(args mock.Arguments) {
+		assert.Equal(t, offsets, args.Get(0))
+	})
+	rs.Add("test2", m2)
+
+	rs.ReportConsumerOffsets(offsets)
+
+	m1.AssertExpectations(t)
+}
+
+func TestReporters_ReportBrokerMetadata(t *testing.T) {
+	rs := kage.Reporters{}
+	metadata := &store.BrokerMetadata{}
+
+	m1 := new(mocks.MockReporter)
+	m1.On("ReportBrokerMetadata", mock.AnythingOfType("*store.BrokerMetadata")).Run(func(args mock.Arguments) {
+		assert.Equal(t, metadata, args.Get(0))
+	})
+	rs.Add("test1", m1)
+
+	m2 := new(mocks.MockReporter)
+	m2.On("ReportBrokerMetadata", mock.AnythingOfType("*store.BrokerMetadata")).Run(func(args mock.Arguments) {
+		assert.Equal(t, metadata, args.Get(0))
+	})
+	rs.Add("test2", m2)
+
+	rs.ReportBrokerMetadata(metadata)
+
+	m1.AssertExpectations(t)
+}
