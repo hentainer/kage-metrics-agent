@@ -17,4 +17,11 @@ type consumerGroup struct {
 type consumerPartition struct {
 	Partition int   `json:"partition"`
 	Offset    int64 `json:"offset"`
-	Lag       int6
+	Lag       int64 `json:"lag"`
+}
+
+// ConsumerGroupsHandler handles requests for consumer groups offsets.
+func (s *Server) ConsumerGroupsHandler(w http.ResponseWriter, r *http.Request) {
+	offsets := s.Store.ConsumerOffsets()
+
+	gro
