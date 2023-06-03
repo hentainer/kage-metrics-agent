@@ -24,4 +24,12 @@ type consumerPartition struct {
 func (s *Server) ConsumerGroupsHandler(w http.ResponseWriter, r *http.Request) {
 	offsets := s.Store.ConsumerOffsets()
 
-	gro
+	groups := []consumerGroup{}
+	for group, topics := range offsets {
+		groups = append(groups, createConsumerGroup(group, topics)...)
+	}
+
+	s.writeJSON(w, groups)
+}
+
+// ConsumerGroupHandler handles requests for a consumer grou
