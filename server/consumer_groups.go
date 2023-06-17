@@ -38,4 +38,14 @@ func (s *Server) ConsumerGroupHandler(w http.ResponseWriter, r *http.Request) {
 
 	group := bone.GetValue(r, "group")
 	topics, ok := offsets[group]
-	if
+	if !ok {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	groups := createConsumerGroup(group, topics)
+
+	s.writeJSON(w, groups)
+}
+
+func createConsumerGroup(group string, topics map[string][]*sto
