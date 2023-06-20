@@ -48,4 +48,10 @@ func (s *Server) ConsumerGroupHandler(w http.ResponseWriter, r *http.Request) {
 	s.writeJSON(w, groups)
 }
 
-func createConsumerGroup(group string, topics map[string][]*sto
+func createConsumerGroup(group string, topics map[string][]*store.ConsumerOffset) []consumerGroup {
+	groups := []consumerGroup{}
+	for topic, partitions := range topics {
+		bt := consumerGroup{
+			Group:      group,
+			Topic:      topic,
+			Partitions: make([]consumerPartition, 
