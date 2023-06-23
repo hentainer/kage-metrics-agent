@@ -54,4 +54,18 @@ func createConsumerGroup(group string, topics map[string][]*store.ConsumerOffset
 		bt := consumerGroup{
 			Group:      group,
 			Topic:      topic,
-			Partitions: make([]consumerPartition, 
+			Partitions: make([]consumerPartition, len(partitions)),
+		}
+
+		for i, partition := range partitions {
+			if partition == nil {
+				continue
+			}
+
+			bp := consumerPartition{
+				Partition: i,
+				Offset:    partition.Offset,
+				Lag:       partition.Lag,
+			}
+
+			bt.
