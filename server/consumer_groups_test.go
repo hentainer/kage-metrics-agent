@@ -27,4 +27,12 @@ func TestConsumerGroupsHandler(t *testing.T) {
 	}
 
 	store := new(mocks.MockStore)
-	store.On("ConsumerOffsets").Retu
+	store.On("ConsumerOffsets").Return(co)
+
+	app := &kage.Application{Store: store}
+
+	srv := server.New(app)
+	srv.ServeHTTP(rr, req)
+
+	want := "[{\"group\":\"test\",\"topic\":\"test\",\"total_lag\":100,\"partitions\":[{\"partition\":0,\"offset\":0,\"lag\":100}]}]"
+	assert.E
