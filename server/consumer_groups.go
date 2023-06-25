@@ -68,4 +68,12 @@ func createConsumerGroup(group string, topics map[string][]*store.ConsumerOffset
 				Lag:       partition.Lag,
 			}
 
-			bt.
+			bt.TotalLag += bp.Lag
+			bt.Partitions[i] = bp
+		}
+
+		groups = append(groups, bt)
+	}
+
+	return groups
+}
