@@ -45,4 +45,15 @@ func TestConsumerGroupHandler(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	rr 
+	rr := httptest.NewRecorder()
+
+	co := store.ConsumerOffsets{
+		"test": map[string][]*store.ConsumerOffset{
+			"test": {{Offset: 0, Lag: 100, Timestamp: 0}},
+		},
+	}
+
+	store := new(mocks.MockStore)
+	store.On("ConsumerOffsets").Return(co)
+
+	app := &kage
