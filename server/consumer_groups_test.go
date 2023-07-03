@@ -62,4 +62,11 @@ func TestConsumerGroupHandler(t *testing.T) {
 	srv.ServeHTTP(rr, req)
 
 	want := "[{\"group\":\"test\",\"topic\":\"test\",\"total_lag\":100,\"partitions\":[{\"partition\":0,\"offset\":0,\"lag\":100}]}]"
-	assert.Equ
+	assert.Equal(t, http.StatusOK, rr.Code)
+	assert.Equal(t, want, rr.Body.String())
+}
+
+func TestConsumerGroupHandler_NotFound(t *testing.T) {
+	req, err := http.NewRequest("GET", "/consumers/none", nil)
+	if err != nil {
+		t.F
