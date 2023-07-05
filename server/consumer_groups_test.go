@@ -83,4 +83,10 @@ func TestConsumerGroupHandler_NotFound(t *testing.T) {
 	store := new(mocks.MockStore)
 	store.On("ConsumerOffsets").Return(co)
 
-	app := &
+	app := &kage.Application{Store: store}
+
+	srv := server.New(app)
+	srv.ServeHTTP(rr, req)
+
+	assert.Equal(t, http.StatusNotFound, rr.Code)
+}
