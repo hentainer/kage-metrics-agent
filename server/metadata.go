@@ -16,4 +16,10 @@ type partitionMetadata struct {
 	Isr       []int32 `json:"isr"`
 }
 
-// MetadataHandler handl
+// MetadataHandler handles requests for topic metadata.
+func (s *Server) MetadataHandler(w http.ResponseWriter, r *http.Request) {
+	metadata := s.Store.BrokerMetadata()
+
+	topics := []topicMetadata{}
+	for topic, partitions := range metadata {
+		bt := t
