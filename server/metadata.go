@@ -22,4 +22,16 @@ func (s *Server) MetadataHandler(w http.ResponseWriter, r *http.Request) {
 
 	topics := []topicMetadata{}
 	for topic, partitions := range metadata {
-		bt := t
+		bt := topicMetadata{
+			Topic:      topic,
+			Partitions: make([]partitionMetadata, len(partitions)),
+		}
+
+		for i, partition := range partitions {
+			if partition == nil {
+				continue
+			}
+
+			pm := partitionMetadata{
+				Partition: i,
+		
