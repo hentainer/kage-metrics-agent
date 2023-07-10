@@ -34,4 +34,15 @@ func (s *Server) MetadataHandler(w http.ResponseWriter, r *http.Request) {
 
 			pm := partitionMetadata{
 				Partition: i,
-		
+				Leader:    partition.Leader,
+				Replicas:  partition.Replicas,
+				Isr:       partition.Isr,
+			}
+			bt.Partitions[i] = pm
+		}
+
+		topics = append(topics, bt)
+	}
+
+	s.writeJSON(w, topics)
+}
