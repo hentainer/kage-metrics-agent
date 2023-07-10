@@ -2,4 +2,14 @@ package server_test
 
 import (
 	"net/http"
-	"net/http/httpt
+	"net/http/httptest"
+	"testing"
+
+	"github.com/msales/kage"
+	"github.com/msales/kage/server"
+	"github.com/msales/kage/store"
+	"github.com/msales/kage/testutil/mocks"
+	"github.com/stretchr/testify/assert"
+)
+
+func TestMetadataHandler(t *testing
