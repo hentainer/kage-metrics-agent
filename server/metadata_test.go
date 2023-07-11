@@ -21,4 +21,15 @@ func TestMetadataHandler(t *testing.T) {
 	rr := httptest.NewRecorder()
 
 	bo := store.BrokerMetadata{
-		"test": []*store.Metadata{{Leader: 1, Replicas: []int32{1, 2}, Isr: []int32{1, 2}, Ti
+		"test": []*store.Metadata{{Leader: 1, Replicas: []int32{1, 2}, Isr: []int32{1, 2}, Timestamp: 0}},
+	}
+
+	store := new(mocks.MockStore)
+	store.On("BrokerMetadata").Return(bo)
+
+	app := &kage.Application{Store: store}
+
+	srv := server.New(app)
+	srv.ServeHTTP(rr, req)
+
+	want := "[{\"topic\":\"test\",\"partitions\":[{\"partition
