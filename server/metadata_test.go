@@ -12,4 +12,13 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestMetadataHandler(t *testing
+func TestMetadataHandler(t *testing.T) {
+	req, err := http.NewRequest("GET", "/metadata", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+
+	bo := store.BrokerMetadata{
+		"test": []*store.Metadata{{Leader: 1, Replicas: []int32{1, 2}, Isr: []int32{1, 2}, Ti
