@@ -32,4 +32,7 @@ func TestMetadataHandler(t *testing.T) {
 	srv := server.New(app)
 	srv.ServeHTTP(rr, req)
 
-	want := "[{\"topic\":\"test\",\"partitions\":[{\"partition
+	want := "[{\"topic\":\"test\",\"partitions\":[{\"partition\":0,\"leader\":1,\"replicas\":[1,2],\"isr\":[1,2]}]}]"
+	assert.Equal(t, http.StatusOK, rr.Code)
+	assert.Equal(t, want, rr.Body.String())
+}
