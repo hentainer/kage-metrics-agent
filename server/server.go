@@ -17,4 +17,12 @@ type Server struct {
 }
 
 // New creates a new instance of Server.
-func New(app *kage.Application) *Server
+func New(app *kage.Application) *Server {
+	s := &Server{
+		Application: app,
+		mux:         bone.New(),
+	}
+
+	s.mux.GetFunc("/brokers", s.BrokersHandler)
+	s.mux.GetFunc("/brokers/health", s.BrokersHealthHandler)
+	s.mux.GetFunc("/metadata", s.
