@@ -25,4 +25,14 @@ func New(app *kage.Application) *Server {
 
 	s.mux.GetFunc("/brokers", s.BrokersHandler)
 	s.mux.GetFunc("/brokers/health", s.BrokersHealthHandler)
-	s.mux.GetFunc("/metadata", s.
+	s.mux.GetFunc("/metadata", s.MetadataHandler)
+	s.mux.GetFunc("/topics", s.TopicsHandler)
+	s.mux.GetFunc("/consumers", s.ConsumerGroupsHandler)
+	s.mux.GetFunc("/consumers/:group", s.ConsumerGroupHandler)
+
+	s.mux.GetFunc("/health", s.HealthHandler)
+
+	return s
+}
+
+// ServeHTTP disp
