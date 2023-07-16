@@ -35,4 +35,11 @@ func New(app *kage.Application) *Server {
 	return s
 }
 
-// ServeHTTP disp
+// ServeHTTP dispatches the request to the handler whose
+// pattern most closely matches the request URL.
+func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	s.mux.ServeHTTP(w, r)
+}
+
+type brokerStatus struct {
+	ID        int
