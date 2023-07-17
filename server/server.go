@@ -42,4 +42,11 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 type brokerStatus struct {
-	ID        int
+	ID        int32 `json:"id"`
+	Connected bool  `json:"connected"`
+}
+
+// BrokersHandler handles requests for brokers status.
+func (s *Server) BrokersHandler(w http.ResponseWriter, r *http.Request) {
+	brokers := []brokerStatus{}
+	for _, b :
