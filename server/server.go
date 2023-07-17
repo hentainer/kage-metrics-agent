@@ -49,4 +49,15 @@ type brokerStatus struct {
 // BrokersHandler handles requests for brokers status.
 func (s *Server) BrokersHandler(w http.ResponseWriter, r *http.Request) {
 	brokers := []brokerStatus{}
-	for _, b :
+	for _, b := range s.Monitor.Brokers() {
+		brokers = append(brokers, brokerStatus{
+			ID:        b.ID,
+			Connected: b.Connected,
+		})
+	}
+
+	s.writeJSON(w, brokers)
+}
+
+// BrokersHealthHandler handles requests for brokers health.
+func (s *Server) Br
