@@ -60,4 +60,14 @@ func (s *Server) BrokersHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // BrokersHealthHandler handles requests for brokers health.
-func (s *Server) Br
+func (s *Server) BrokersHealthHandler(w http.ResponseWriter, r *http.Request) {
+	for _, b := range s.Monitor.Brokers() {
+		if !b.Connected {
+			w.WriteHeader(500)
+			return
+		}
+	}
+}
+
+// HealthHandler handles health requests.
+func (s *Server) HealthHandler(w http
