@@ -70,4 +70,16 @@ func (s *Server) BrokersHealthHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // HealthHandler handles health requests.
-func (s *Server) HealthHandler(w http
+func (s *Server) HealthHandler(w http.ResponseWriter, r *http.Request) {
+	if !s.IsHealthy() {
+		w.WriteHeader(500)
+		return
+	}
+
+	w.WriteHeader(200)
+}
+
+func (s *Server) writeJSON(w http.ResponseWriter, v interface{}) {
+	data, err := json.Marshal(v)
+	if err != nil {
+		w.WriteHeader(500
