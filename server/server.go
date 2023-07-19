@@ -82,4 +82,10 @@ func (s *Server) HealthHandler(w http.ResponseWriter, r *http.Request) {
 func (s *Server) writeJSON(w http.ResponseWriter, v interface{}) {
 	data, err := json.Marshal(v)
 	if err != nil {
-		w.WriteHeader(500
+		w.WriteHeader(500)
+		s.Logger.Error(fmt.Sprintf("server: error writing json: %s", err))
+		return
+	}
+
+	w.Write(data)
+}
