@@ -14,4 +14,14 @@ import (
 )
 
 func TestBrokersHandler(t *testing.T) {
-	req, err := http.NewRequest(
+	req, err := http.NewRequest("GET", "/brokers", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+
+	monitor := new(mocks.MockMonitor)
+	monitor.On("Brokers").Return([]kafka.Broker{{ID: 0, Connected: false}})
+
+	app := &kage
