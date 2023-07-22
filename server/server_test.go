@@ -24,4 +24,14 @@ func TestBrokersHandler(t *testing.T) {
 	monitor := new(mocks.MockMonitor)
 	monitor.On("Brokers").Return([]kafka.Broker{{ID: 0, Connected: false}})
 
-	app := &kage
+	app := &kage.Application{Monitor: monitor}
+
+	srv := server.New(app)
+	srv.ServeHTTP(rr, req)
+
+	want := "[{\"id\":0,\"connected\":false}]"
+	assert.Equal(t, http.StatusOK, rr.Code)
+	assert.Equal(t, want, rr.Body.String())
+}
+
+func TestBrokersHealthHandler(t *testing
