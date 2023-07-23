@@ -44,4 +44,13 @@ func TestBrokersHealthHandler(t *testing.T) {
 
 	monitor := new(mocks.MockMonitor)
 	monitor.On("Brokers").Return([]kafka.Broker{{ID: 0, Connected: true}}).Once()
-	mo
+	monitor.On("Brokers").Return([]kafka.Broker{{ID: 0, Connected: false}}).Once()
+
+	app := &kage.Application{Monitor: monitor}
+
+	srv := server.New(app)
+	srv.ServeHTTP(rr, req)
+
+	assert.Equal(t, http.StatusOK, rr.Code)
+
+	srv.Se
