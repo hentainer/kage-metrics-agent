@@ -34,4 +34,14 @@ func TestBrokersHandler(t *testing.T) {
 	assert.Equal(t, want, rr.Body.String())
 }
 
-func TestBrokersHealthHandler(t *testing
+func TestBrokersHealthHandler(t *testing.T) {
+	req, err := http.NewRequest("GET", "/brokers/health", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+
+	monitor := new(mocks.MockMonitor)
+	monitor.On("Brokers").Return([]kafka.Broker{{ID: 0, Connected: true}}).Once()
+	mo
