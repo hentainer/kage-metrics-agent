@@ -64,4 +64,14 @@ func TestHealthPass(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	rr := httptest.NewR
+	rr := httptest.NewRecorder()
+
+	reporters := &kage.Reporters{}
+	reporter := new(mocks.MockReporter)
+	reporter.On("IsHealthy").Return(true)
+	reporters.Add("test", reporter)
+
+	monitor := new(mocks.MockMonitor)
+	monitor.On("IsHealthy").Return(true)
+
+	app := &kage.Appli
