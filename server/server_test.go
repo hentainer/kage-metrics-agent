@@ -53,4 +53,15 @@ func TestBrokersHealthHandler(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, rr.Code)
 
-	srv.Se
+	srv.ServeHTTP(rr, req)
+
+	assert.Equal(t, http.StatusInternalServerError, rr.Code)
+}
+
+func TestHealthPass(t *testing.T) {
+	req, err := http.NewRequest("GET", "/health", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewR
