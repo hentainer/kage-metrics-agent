@@ -74,4 +74,16 @@ func TestHealthPass(t *testing.T) {
 	monitor := new(mocks.MockMonitor)
 	monitor.On("IsHealthy").Return(true)
 
-	app := &kage.Appli
+	app := &kage.Application{
+		Reporters: reporters,
+		Monitor:   monitor,
+	}
+
+	srv := server.New(app)
+	srv.ServeHTTP(rr, req)
+
+	assert.Equal(t, http.StatusOK, rr.Code)
+}
+
+func TestHealthFail(t *testing.T) {
+	req, err := 
