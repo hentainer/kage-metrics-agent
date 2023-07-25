@@ -86,4 +86,14 @@ func TestHealthPass(t *testing.T) {
 }
 
 func TestHealthFail(t *testing.T) {
-	req, err := 
+	req, err := http.NewRequest("GET", "/health", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+
+	srv := server.New(&kage.Application{Logger: testutil.Logger})
+	srv.ServeHTTP(rr, req)
+
+	assert.Equal(t, http.StatusInterna
