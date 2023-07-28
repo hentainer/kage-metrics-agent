@@ -96,4 +96,5 @@ func TestHealthFail(t *testing.T) {
 	srv := server.New(&kage.Application{Logger: testutil.Logger})
 	srv.ServeHTTP(rr, req)
 
-	assert.Equal(t, http.StatusInterna
+	assert.Equal(t, http.StatusInternalServerError, rr.Code)
+}
