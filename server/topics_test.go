@@ -8,3 +8,14 @@ import (
 	"github.com/msales/kage"
 	"github.com/msales/kage/server"
 	"github.com/msales/kage/store"
+	"github.com/msales/kage/testutil/mocks"
+	"github.com/stretchr/testify/assert"
+)
+
+func TestTopicsHandler(t *testing.T) {
+	req, err := http.NewRequest("GET", "/topics", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := http
