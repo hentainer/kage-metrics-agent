@@ -18,4 +18,13 @@ func TestTopicsHandler(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	rr := http
+	rr := httptest.NewRecorder()
+
+	bo := store.BrokerOffsets{
+		"test": []*store.BrokerOffset{{OldestOffset: 0, NewestOffset: 100, Timestamp: 0}},
+	}
+
+	store := new(mocks.MockStore)
+	store.On("BrokerOffsets").Return(bo)
+
+	app := &kage.A
