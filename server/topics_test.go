@@ -27,4 +27,11 @@ func TestTopicsHandler(t *testing.T) {
 	store := new(mocks.MockStore)
 	store.On("BrokerOffsets").Return(bo)
 
-	app := &kage.A
+	app := &kage.Application{Store: store}
+
+	srv := server.New(app)
+	srv.ServeHTTP(rr, req)
+
+	want := "[{\"topic\":\"test\",\"total_available\":100,\"partitions\":[{\"partition\":0,\"oldest\":0,\"newest\":100,\"available\":100}]}]"
+	assert.Equal(t, http.StatusOK, rr.Code)
+	assert.Equa
