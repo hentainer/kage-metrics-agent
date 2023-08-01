@@ -34,4 +34,5 @@ func TestTopicsHandler(t *testing.T) {
 
 	want := "[{\"topic\":\"test\",\"total_available\":100,\"partitions\":[{\"partition\":0,\"oldest\":0,\"newest\":100,\"available\":100}]}]"
 	assert.Equal(t, http.StatusOK, rr.Code)
-	assert.Equa
+	assert.Equal(t, want, rr.Body.String())
+}
