@@ -24,4 +24,11 @@ type MemoryStore struct {
 	cleanupTicker *time.Ticker
 	shutdown      chan struct{}
 
-	sta
+	stateCh chan interface{}
+}
+
+// New creates and returns a new MemoryStore.
+func New() (*MemoryStore, error) {
+	m := &MemoryStore{
+		shutdown: make(chan struct{}),
+		stateCh:  make(chan interface{}, 10000),
