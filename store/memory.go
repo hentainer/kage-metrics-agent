@@ -12,4 +12,16 @@ type State struct {
 	brokerLock sync.RWMutex
 
 	consumer     ConsumerOffsets
-	cons
+	consumerLock sync.RWMutex
+
+	metadata     BrokerMetadata
+	metadataLock sync.RWMutex
+}
+
+// MemoryStore represents an in memory data store.
+type MemoryStore struct {
+	state         *State
+	cleanupTicker *time.Ticker
+	shutdown      chan struct{}
+
+	sta
