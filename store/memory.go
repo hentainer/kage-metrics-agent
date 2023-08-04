@@ -32,3 +32,17 @@ func New() (*MemoryStore, error) {
 	m := &MemoryStore{
 		shutdown: make(chan struct{}),
 		stateCh:  make(chan interface{}, 10000),
+	}
+
+	// Initialise the cluster offsets
+	m.state = &State{
+		broker:   make(BrokerOffsets),
+		consumer: make(ConsumerOffsets),
+		metadata: make(BrokerMetadata),
+	}
+
+	// Start the offset reader
+	go func() {
+		for {
+			select {
+			c
