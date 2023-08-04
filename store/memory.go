@@ -45,4 +45,17 @@ func New() (*MemoryStore, error) {
 	go func() {
 		for {
 			select {
-			c
+			case v := <-m.stateCh:
+				go m.SetState(v)
+
+			case <-m.shutdown:
+				return
+			}
+		}
+	}()
+
+	// Start cleanup task
+	m.cleanupTicker = time.NewTicker(1 * time.Hour)
+	go func() {
+		for range m.cleanupTicker.C {
+			m.Clean
