@@ -58,4 +58,15 @@ func New() (*MemoryStore, error) {
 	m.cleanupTicker = time.NewTicker(1 * time.Hour)
 	go func() {
 		for range m.cleanupTicker.C {
-			m.Clean
+			m.CleanConsumerOffsets()
+		}
+	}()
+
+	return m, nil
+}
+
+// SetState adds a state into the store.
+func (m *MemoryStore) SetState(v interface{}) error {
+	switch v.(type) {
+	case *BrokerPartitionOffset:
+		m.addBrokerOffset(v.(*BrokerPart
