@@ -69,4 +69,16 @@ func New() (*MemoryStore, error) {
 func (m *MemoryStore) SetState(v interface{}) error {
 	switch v.(type) {
 	case *BrokerPartitionOffset:
-		m.addBrokerOffset(v.(*BrokerPart
+		m.addBrokerOffset(v.(*BrokerPartitionOffset))
+
+	case *ConsumerPartitionOffset:
+		m.addConsumerOffset(v.(*ConsumerPartitionOffset))
+
+	case *BrokerPartitionMetadata:
+		m.addMetadata(v.(*BrokerPartitionMetadata))
+
+	default:
+		return errors.New("store: unknown state object")
+	}
+
+	return
