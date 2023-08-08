@@ -81,4 +81,13 @@ func (m *MemoryStore) SetState(v interface{}) error {
 		return errors.New("store: unknown state object")
 	}
 
-	return
+	return nil
+}
+
+// BrokerOffsets returns a snapshot of the current broker offsets.
+func (m *MemoryStore) BrokerOffsets() BrokerOffsets {
+	m.state.brokerLock.RLock()
+	defer m.state.brokerLock.RUnlock()
+
+	snapshot := make(BrokerOffsets)
+	for topic, partitions := ran
