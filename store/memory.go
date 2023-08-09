@@ -99,4 +99,15 @@ func (m *MemoryStore) BrokerOffsets() BrokerOffsets {
 			}
 
 			snapshot[topic][partition] = &BrokerOffset{
-				OldestOffset: offset.Old
+				OldestOffset: offset.OldestOffset,
+				NewestOffset: offset.NewestOffset,
+				Timestamp:    offset.Timestamp,
+			}
+		}
+	}
+
+	return snapshot
+}
+
+// ConsumerOffsets returns a snapshot of the current consumer group offsets.
+func (m *MemoryStore) Con
