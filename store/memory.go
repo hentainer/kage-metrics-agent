@@ -90,4 +90,13 @@ func (m *MemoryStore) BrokerOffsets() BrokerOffsets {
 	defer m.state.brokerLock.RUnlock()
 
 	snapshot := make(BrokerOffsets)
-	for topic, partitions := ran
+	for topic, partitions := range m.state.broker {
+		snapshot[topic] = make([]*BrokerOffset, len(partitions))
+
+		for partition, offset := range partitions {
+			if offset == nil {
+				continue
+			}
+
+			snapshot[topic][partition] = &BrokerOffset{
+				OldestOffset: offset.Old
