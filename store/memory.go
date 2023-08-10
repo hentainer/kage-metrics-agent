@@ -110,4 +110,10 @@ func (m *MemoryStore) BrokerOffsets() BrokerOffsets {
 }
 
 // ConsumerOffsets returns a snapshot of the current consumer group offsets.
-func (m *MemoryStore) Con
+func (m *MemoryStore) ConsumerOffsets() ConsumerOffsets {
+	m.state.consumerLock.RLock()
+	defer m.state.consumerLock.RUnlock()
+
+	snapshot := make(ConsumerOffsets)
+	for group, topics := range m.state.consumer {
+		snapshot[group] = make(map[string]
