@@ -116,4 +116,14 @@ func (m *MemoryStore) ConsumerOffsets() ConsumerOffsets {
 
 	snapshot := make(ConsumerOffsets)
 	for group, topics := range m.state.consumer {
-		snapshot[group] = make(map[string]
+		snapshot[group] = make(map[string][]*ConsumerOffset)
+
+		for topic, partitions := range topics {
+			snapshot[group][topic] = make([]*ConsumerOffset, len(partitions))
+
+			for partition, offset := range partitions {
+				if offset == nil {
+					continue
+				}
+
+			
