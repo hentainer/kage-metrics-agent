@@ -126,4 +126,16 @@ func (m *MemoryStore) ConsumerOffsets() ConsumerOffsets {
 					continue
 				}
 
-			
+				snapshot[group][topic][partition] = &ConsumerOffset{
+					Offset:    offset.Offset,
+					Lag:       offset.Lag,
+					Timestamp: offset.Timestamp,
+				}
+			}
+		}
+	}
+
+	return snapshot
+}
+
+// BrokerMetadata returns a snapsho
