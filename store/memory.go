@@ -144,4 +144,14 @@ func (m *MemoryStore) BrokerMetadata() BrokerMetadata {
 	defer m.state.metadataLock.RUnlock()
 
 	snapshot := make(BrokerMetadata)
-	for topic, partitions := range 
+	for topic, partitions := range m.state.metadata {
+		snapshot[topic] = make([]*Metadata, len(partitions))
+
+		for partition, metadata := range partitions {
+			if metadata == nil {
+				continue
+			}
+
+			snapshot[topic][partition] = &Metadata{
+				Leader:   metadata.Leader,
+				Replicas: make(
