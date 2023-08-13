@@ -138,4 +138,10 @@ func (m *MemoryStore) ConsumerOffsets() ConsumerOffsets {
 	return snapshot
 }
 
-// BrokerMetadata returns a snapsho
+// BrokerMetadata returns a snapshot of the current broker metadata.
+func (m *MemoryStore) BrokerMetadata() BrokerMetadata {
+	m.state.metadataLock.RLock()
+	defer m.state.metadataLock.RUnlock()
+
+	snapshot := make(BrokerMetadata)
+	for topic, partitions := range 
