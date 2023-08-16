@@ -154,4 +154,10 @@ func (m *MemoryStore) BrokerMetadata() BrokerMetadata {
 
 			snapshot[topic][partition] = &Metadata{
 				Leader:   metadata.Leader,
-				Replicas: make(
+				Replicas: make([]int32, len(metadata.Replicas)),
+				Isr:      make([]int32, len(metadata.Isr)),
+			}
+			copy(snapshot[topic][partition].Replicas, metadata.Replicas)
+			copy(snapshot[topic][partition].Isr, metadata.Isr)
+		}
+	
