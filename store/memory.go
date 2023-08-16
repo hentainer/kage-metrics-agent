@@ -160,4 +160,14 @@ func (m *MemoryStore) BrokerMetadata() BrokerMetadata {
 			copy(snapshot[topic][partition].Replicas, metadata.Replicas)
 			copy(snapshot[topic][partition].Isr, metadata.Isr)
 		}
-	
+	}
+
+	return snapshot
+}
+
+// CleanConsumerOffsets cleans old offsets from the MemoryStore.
+func (m *MemoryStore) CleanConsumerOffsets() {
+	m.state.consumerLock.Lock()
+	defer m.state.consumerLock.Unlock()
+
+	t
