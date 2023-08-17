@@ -170,4 +170,14 @@ func (m *MemoryStore) CleanConsumerOffsets() {
 	m.state.consumerLock.Lock()
 	defer m.state.consumerLock.Unlock()
 
-	t
+	ts := time.Now().Unix() * 1000
+	for group, topics := range m.state.consumer {
+		for topic, partitions := range topics {
+			maxDuration := int64(0)
+
+			for _, offset := range partitions {
+				if offset == nil {
+					continue
+				}
+
+	
