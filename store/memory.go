@@ -180,4 +180,15 @@ func (m *MemoryStore) CleanConsumerOffsets() {
 					continue
 				}
 
-	
+				duration := ts - offset.Timestamp
+				if duration > maxDuration {
+					maxDuration = duration
+				}
+			}
+
+			if maxDuration > (24 * int64(time.Hour.Seconds()) * 1000) {
+				delete(m.state.consumer[group], topic)
+			}
+		}
+
+		if len(m.state
