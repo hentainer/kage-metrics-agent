@@ -191,4 +191,16 @@ func (m *MemoryStore) CleanConsumerOffsets() {
 			}
 		}
 
-		if len(m.state
+		if len(m.state.consumer[group]) == 0 {
+			delete(m.state.consumer, group)
+		}
+	}
+}
+
+// Channel get the offset channel.
+func (m *MemoryStore) Channel() chan interface{} {
+	return m.stateCh
+}
+
+// Close gracefully stops the MemoryStore.
+func (m *MemoryStore
