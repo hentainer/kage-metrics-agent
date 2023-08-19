@@ -203,4 +203,14 @@ func (m *MemoryStore) Channel() chan interface{} {
 }
 
 // Close gracefully stops the MemoryStore.
-func (m *MemoryStore
+func (m *MemoryStore) Close() {
+	m.cleanupTicker.Stop()
+	close(m.shutdown)
+}
+
+func (m *MemoryStore) addBrokerOffset(o *BrokerPartitionOffset) {
+	m.state.brokerLock.Lock()
+	defer m.state.brokerLock.Unlock()
+
+	topic, ok := m.state.broker[o.Topic]
+	if 
