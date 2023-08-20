@@ -213,4 +213,12 @@ func (m *MemoryStore) addBrokerOffset(o *BrokerPartitionOffset) {
 	defer m.state.brokerLock.Unlock()
 
 	topic, ok := m.state.broker[o.Topic]
-	if 
+	if !ok {
+		topic = make([]*BrokerOffset, o.TopicPartitionCount)
+		m.state.broker[o.Topic] = topic
+	}
+
+	if o.TopicPartitionCount > len(topic) {
+		for i := len(topic); i < o.TopicPartitionCount; i++ {
+			topic = append(topic, nil)
+		}
