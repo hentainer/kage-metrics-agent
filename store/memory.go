@@ -222,3 +222,15 @@ func (m *MemoryStore) addBrokerOffset(o *BrokerPartitionOffset) {
 		for i := len(topic); i < o.TopicPartitionCount; i++ {
 			topic = append(topic, nil)
 		}
+		m.state.broker[o.Topic] = topic
+	}
+
+	partition := topic[o.Partition]
+	if partition == nil {
+		partition = &BrokerOffset{}
+		topic[o.Partition] = partition
+	}
+
+	partition.Timestamp = o.Timestamp
+	if o.Oldest {
+		partition.OldestOffset = o.Offset
