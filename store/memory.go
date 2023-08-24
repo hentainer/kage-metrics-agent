@@ -234,3 +234,15 @@ func (m *MemoryStore) addBrokerOffset(o *BrokerPartitionOffset) {
 	partition.Timestamp = o.Timestamp
 	if o.Oldest {
 		partition.OldestOffset = o.Offset
+	} else {
+		partition.NewestOffset = o.Offset
+	}
+}
+
+func (m *MemoryStore) addConsumerOffset(o *ConsumerPartitionOffset) {
+	brokerOffset, partitionCount := m.getBrokerOffset(o.Topic, o.Partition)
+	if brokerOffset == -1 {
+		return
+	}
+
+	m.state.consu
