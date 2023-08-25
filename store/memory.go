@@ -245,4 +245,14 @@ func (m *MemoryStore) addConsumerOffset(o *ConsumerPartitionOffset) {
 		return
 	}
 
-	m.state.consu
+	m.state.consumerLock.Lock()
+	defer m.state.consumerLock.Unlock()
+
+	group, ok := m.state.consumer[o.Group]
+	if !ok {
+		group = make(map[string][]*ConsumerOffset)
+		m.state.consumer[o.Group] = group
+	}
+
+	topic, ok := group[o.Topic]
+	
