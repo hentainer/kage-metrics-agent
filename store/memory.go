@@ -267,4 +267,17 @@ func (m *MemoryStore) addConsumerOffset(o *ConsumerPartitionOffset) {
 		group[o.Topic] = topic
 	}
 
-	offset 
+	offset := topic[o.Partition]
+	if offset == nil {
+		offset = &ConsumerOffset{}
+		topic[o.Partition] = offset
+	}
+
+	lag := brokerOffset - o.Offset
+	if lag < 0 || o.Offset == 0 {
+		lag = 0
+	}
+
+	offset.Offset = o.Offset
+	offset.Timestamp = o.Timestamp
+	offset.Lag 
