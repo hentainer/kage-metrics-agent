@@ -255,4 +255,16 @@ func (m *MemoryStore) addConsumerOffset(o *ConsumerPartitionOffset) {
 	}
 
 	topic, ok := group[o.Topic]
-	
+	if !ok {
+		topic = make([]*ConsumerOffset, partitionCount)
+		group[o.Topic] = topic
+	}
+
+	if partitionCount > len(topic) {
+		for i := len(topic); i < partitionCount; i++ {
+			topic = append(topic, nil)
+		}
+		group[o.Topic] = topic
+	}
+
+	offset 
