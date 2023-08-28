@@ -280,4 +280,16 @@ func (m *MemoryStore) addConsumerOffset(o *ConsumerPartitionOffset) {
 
 	offset.Offset = o.Offset
 	offset.Timestamp = o.Timestamp
-	offset.Lag 
+	offset.Lag = lag
+}
+
+func (m *MemoryStore) getBrokerOffset(topic string, partition int32) (int64, int) {
+	m.state.brokerLock.RLock()
+	defer m.state.brokerLock.RUnlock()
+
+	brokerTopic, ok := m.state.broker[topic]
+	if !ok {
+		return -1, -1
+	}
+
+	if pa
