@@ -303,4 +303,11 @@ func (m *MemoryStore) getBrokerOffset(topic string, partition int32) (int64, int
 	return brokerTopic[partition].NewestOffset, len(brokerTopic)
 }
 
-func (m *MemoryStore) addMe
+func (m *MemoryStore) addMetadata(v *BrokerPartitionMetadata) {
+	m.state.metadataLock.Lock()
+	defer m.state.metadataLock.Unlock()
+
+	topic, ok := m.state.metadata[v.Topic]
+	if !ok {
+		topic = make([]*Metadata, v.TopicPartitionCount)
+		m.state
