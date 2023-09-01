@@ -310,4 +310,16 @@ func (m *MemoryStore) addMetadata(v *BrokerPartitionMetadata) {
 	topic, ok := m.state.metadata[v.Topic]
 	if !ok {
 		topic = make([]*Metadata, v.TopicPartitionCount)
-		m.state
+		m.state.metadata[v.Topic] = topic
+	}
+
+	if v.TopicPartitionCount > len(topic) {
+		for i := len(topic); i < v.TopicPartitionCount; i++ {
+			topic = append(topic, nil)
+		}
+	}
+
+	partition := topic[v.Partition]
+	if partition == nil {
+		partition = &Metadata{}
+		topic[v.P
