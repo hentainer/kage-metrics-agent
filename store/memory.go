@@ -322,4 +322,11 @@ func (m *MemoryStore) addMetadata(v *BrokerPartitionMetadata) {
 	partition := topic[v.Partition]
 	if partition == nil {
 		partition = &Metadata{}
-		topic[v.P
+		topic[v.Partition] = partition
+	}
+
+	partition.Leader = v.Leader
+	partition.Replicas = v.Replicas
+	partition.Isr = v.Isr
+	partition.Timestamp = v.Timestamp
+}
