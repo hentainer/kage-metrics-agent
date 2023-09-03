@@ -57,3 +57,8 @@ type ConsumerPartitionOffset struct {
 type ConsumerOffsets map[string]map[string][]*ConsumerOffset
 
 // ConsumerOffset represents a consumer group topic partition offset.
+type ConsumerOffset struct {
+	Offset    int64
+	Timestamp int64
+	Lag       int64
+}
