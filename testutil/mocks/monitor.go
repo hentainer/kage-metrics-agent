@@ -11,4 +11,14 @@ type MockMonitor struct {
 }
 
 // Brokers returns a list of Kafka brokers.
-func (m *MockMonito
+func (m *MockMonitor) Brokers() []kafka.Broker {
+	args := m.Called()
+	return args.Get(0).([]kafka.Broker)
+}
+
+// Collect collects the state of Monitor.
+func (m *MockMonitor) Collect() {
+	m.Called()
+}
+
+// IsHealthy checks the health of the Kafka
