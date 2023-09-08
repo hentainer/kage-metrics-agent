@@ -21,4 +21,13 @@ func (m *MockMonitor) Collect() {
 	m.Called()
 }
 
-// IsHealthy checks the health of the Kafka
+// IsHealthy checks the health of the Kafka client.
+func (m *MockMonitor) IsHealthy() bool {
+	args := m.Called()
+	return args.Bool(0)
+}
+
+// Close gracefully stops the Kafka client.
+func (m *MockMonitor) Close() {
+	m.Called()
+}
