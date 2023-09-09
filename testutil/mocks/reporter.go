@@ -11,4 +11,13 @@ type MockReporter struct {
 }
 
 // ReportBrokerOffsets reports a snapshot of the broker offsets.
-func (m *MockReporter) ReportBrokerOffsets(v *sto
+func (m *MockReporter) ReportBrokerOffsets(v *store.BrokerOffsets) {
+	m.Called(v)
+}
+
+// ReportConsumerOffsets reports a snapshot of the consumer group offsets.
+func (m *MockReporter) ReportConsumerOffsets(v *store.ConsumerOffsets) {
+	m.Called(v)
+}
+
+// ReportBrokerMe
