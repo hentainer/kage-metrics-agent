@@ -20,4 +20,7 @@ func (m *MockReporter) ReportConsumerOffsets(v *store.ConsumerOffsets) {
 	m.Called(v)
 }
 
-// ReportBrokerMe
+// ReportBrokerMetadata reports a snapshot of the broker metadata.
+func (m *MockReporter) ReportBrokerMetadata(v *store.BrokerMetadata) {
+	m.Called(v)
+}
