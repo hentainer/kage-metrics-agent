@@ -16,4 +16,11 @@ func (m *MockStore) SetState(v interface{}) error {
 	return args.Error(0)
 }
 
-// BrokerOffs
+// BrokerOffsets returns a snapshot of the current broker offsets.
+func (m *MockStore) BrokerOffsets() store.BrokerOffsets {
+	args := m.Called()
+	return args.Get(0).(store.BrokerOffsets)
+}
+
+// ConsumerOffsets returns a snapshot of the current consumer group offsets.
+func (m *MockStor
