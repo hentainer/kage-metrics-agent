@@ -29,4 +29,15 @@ func (m *MockStore) ConsumerOffsets() store.ConsumerOffsets {
 }
 
 // BrokerMetadata returns a snapshot of the current broker metadata.
-func (m *MockStore) BrokerMetadata() store.BrokerMet
+func (m *MockStore) BrokerMetadata() store.BrokerMetadata {
+	args := m.Called()
+	return args.Get(0).(store.BrokerMetadata)
+}
+
+// Channel get the offset channel.
+func (m *MockStore) Channel() chan interface{} {
+	args := m.Called()
+	return args.Get(0).(chan interface{})
+}
+
+// Close gra
