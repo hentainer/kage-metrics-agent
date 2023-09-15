@@ -23,4 +23,10 @@ func (m *MockStore) BrokerOffsets() store.BrokerOffsets {
 }
 
 // ConsumerOffsets returns a snapshot of the current consumer group offsets.
-func (m *MockStor
+func (m *MockStore) ConsumerOffsets() store.ConsumerOffsets {
+	args := m.Called()
+	return args.Get(0).(store.ConsumerOffsets)
+}
+
+// BrokerMetadata returns a snapshot of the current broker metadata.
+func (m *MockStore) BrokerMetadata() store.BrokerMet
