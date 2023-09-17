@@ -40,4 +40,7 @@ func (m *MockStore) Channel() chan interface{} {
 	return args.Get(0).(chan interface{})
 }
 
-// Close gra
+// Close gracefully stops the Store.
+func (m *MockStore) Close() {
+	m.Called()
+}
