@@ -15,4 +15,7 @@ func SplitMap(s []string, sep string) map[string]string {
 		if len(parts) > 1 {
 			v = parts[1]
 		}
-		m[p
+		m[parts[0]] = v
+	}
+	return m
+}
