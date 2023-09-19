@@ -11,3 +11,13 @@ func TestSplitMap(t *testing.T) {
 	tests := []struct {
 		in     []string
 		sep    string
+		expect map[string]string
+	}{
+		{
+			in:     []string{"foo=bar", "bar=baz", "test=test=test"},
+			sep:    "=",
+			expect: map[string]string{"foo": "bar", "bar": "baz", "test": "test=test"},
+		},
+		{
+			in:     []string{},
+			s
