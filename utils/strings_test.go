@@ -20,4 +20,20 @@ func TestSplitMap(t *testing.T) {
 		},
 		{
 			in:     []string{},
-			s
+			sep:    "=",
+			expect: nil,
+		},
+		{
+			in:     nil,
+			sep:    "=",
+			expect: nil,
+		},
+		{
+			in:     []string{"foo=bar", "bar=baz"},
+			sep:    "",
+			expect: nil,
+		},
+		{
+			in:     []string{"foo", "bar"},
+			sep:    "=",
+			expect
