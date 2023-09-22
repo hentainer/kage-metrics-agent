@@ -36,4 +36,12 @@ func TestSplitMap(t *testing.T) {
 		{
 			in:     []string{"foo", "bar"},
 			sep:    "=",
-			expect
+			expect: map[string]string{"foo": "", "bar": ""},
+		},
+	}
+
+	for _, test := range tests {
+		out := utils.SplitMap(test.in, test.sep)
+		assert.Equal(t, test.expect, out)
+	}
+}
