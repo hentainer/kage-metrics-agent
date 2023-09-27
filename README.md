@@ -13,4 +13,6 @@ Kage (as in \"Kafka AGEnt\") reads Offset- and Lag metrics from Kafka and writes
 
 ## Motivation
 
-Running Kafka often requires robust monitoring solutions. One way to tackle this is by querying the beans directly
+Running Kafka often requires robust monitoring solutions. One way to tackle this is by querying the beans directly via JMX, which requires another JVM that collects the data. This solution involves getting the metrics straight out of Kafka and feeding them into InfluxDB in a configurable manner.
+
+(rest of the README continues exactly as before...)
