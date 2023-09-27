@@ -9,4 +9,8 @@
 
 ## Synopsis
 
-Kage (as in \"Kafka AGEnt\") 
+Kage (as in \"Kafka AGEnt\") reads Offset- and Lag metrics from Kafka and writes them to an InfluxDB.
+
+## Motivation
+
+Running Kafka often requires robust monitoring solutions. One way to tackle this is by querying the beans directly
